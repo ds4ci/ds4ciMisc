@@ -1,0 +1,13 @@
+Package: ds4ciMisc
+Type: Package
+Title: Miscellaneous Functions for DS4CI Projects
+Version: 0.1.0
+Authors@R: person("Jim", "Porzak", email = "Jim@DS4CI.org",
+                  role = c("aut", "cre"))
+Maintainer: Jim Porzak <Jim@DS4CI.org>
+Description: Various convenience functions for ploting, using SQL data, ...
+License: GPL-3
+LazyData: TRUE
+Imports:
+    stringr,
+    RJDBC
