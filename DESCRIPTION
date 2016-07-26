@@ -11,3 +11,4 @@ LazyData: TRUE
 Imports:
     stringr,
     RJDBC
+RoxygenNote: 5.0.1
