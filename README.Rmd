@@ -19,5 +19,5 @@ The initial set of functions are focused on making it easier to use SQL DBMS bas
 
 * `sql_list()` Transforms a vector into a SQL list suitable for use in a WHERE clause.
 * `sql_collapse()` Collapses a multi-line string, such as what `readLines()` returns when reading a SQL script file, into a single line. SQL line comments, "--", are also removed.
-* `sql_varsub()` Replaces dbVisualizer variable tags, "${...}$", with supplied variable values. 
+* `sql_varsub()` Replaces dbVisualizer variable tags, "\${...}\$", with supplied variable values. 
 
