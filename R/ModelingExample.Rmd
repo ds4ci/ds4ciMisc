@@ -1,0 +1,26 @@
+---
+title: "Modeling Example"
+output: html_notebook
+author: Jim Porzak
+---
+
+```{r setup}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(knitr)
+```
+
+```{r read}
+nlys <- read_tsv("../DataIn/NationalLongitudianlYouthSurvey.tab") %>% 
+  filter(Height < 100, Weight > 50)
+
+glimpse(nlys)
+```
+
+```{r rda}
+ggplot(nlys, aes(Height, Weight, color = Gender, fill = Gender)) +
+  geom_point() + geom_smooth() +
+  facet_grid(Gender ~ ., scales = "free")
+```
+

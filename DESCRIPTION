@@ -10,6 +10,9 @@ License: GPL-3
 LazyData: TRUE
 Imports:
     stringr,
-    RJDBC
+    RJDBC,
+    odbc,
+    DBI,
+    aws.s3
 RoxygenNote: 5.0.1
 Suggests: testthat
