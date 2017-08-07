@@ -19,5 +19,5 @@ sql_collapse <- function(query){
          call. = FALSE)
   }
   q <- stringr::str_replace(query, "--[:print:]*$", "")
-  str_trim(paste(q, collapse = " "))
+  stringr::str_trim(paste(q, collapse = " "))
 }
