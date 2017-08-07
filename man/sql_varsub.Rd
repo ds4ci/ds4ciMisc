@@ -54,4 +54,3 @@ dbGetQuery(conn, q)    ## assuming RJDBC connection is set up already
 }
 
 }
-

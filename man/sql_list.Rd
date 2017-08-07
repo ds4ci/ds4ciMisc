@@ -28,4 +28,3 @@ sql_list(c(1, 2, 3))
 sql_list(c("a", "b", "c"))
 
 }
-

@@ -14,5 +14,5 @@ Imports:
     odbc,
     DBI,
     aws.s3
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Suggests: testthat

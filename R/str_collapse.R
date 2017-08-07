@@ -18,6 +18,6 @@ sql_collapse <- function(query){
     stop("stringr package needed for this function to work. Please install it.",
          call. = FALSE)
   }
-  q <- str_replace(query, "--[:print:]*$", "")
+  q <- stringr::str_replace(query, "--[:print:]*$", "")
   str_trim(paste(q, collapse = " "))
 }

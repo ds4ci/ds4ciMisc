@@ -21,4 +21,3 @@ q <- readLines('./SQL/qVariablesInQueryExample1.sql')
 sql_collapse(q)
 }
 }
-
