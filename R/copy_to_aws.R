@@ -40,6 +40,9 @@ copy_to_aws <- function(con, df, schema = "public", tname = deparse(substitute(d
                         types = NULL,
                         ...) {
   if(!("data.frame" %in% class(df))) stop("'df' not a data.frame")
+
+  tfile <- paste0(tempfile(), ".txt.gz")
+  s3_obj <- paste0(s3_folder, "/", stringr::word(tfile, -1, sep = fixed("\\")))
   vals <- list(schema = schema,
                tname = tname,
                s3b = s3_bucket,
@@ -62,11 +65,7 @@ copy_to_aws <- function(con, df, schema = "public", tname = deparse(substitute(d
 
   nrow_initial <- DBI::dbGetQuery(con, qnr)[1,1]
 
-
-  tfile <- paste0(tempfile(), ".txt.gz")
-
-  write_delim(df, gzfile(tfile), delim = "|", na = "")
-  s3_obj <- paste0(s3_folder, "/", word(tfile, -1, sep = fixed("\\")))
+  readr::write_delim(df, gzfile(tfile), delim = "|", na = "")
   ret_put <- aws.s3::put_object(tfile, s3_obj, s3_bucket)
 
   q_copy <- "

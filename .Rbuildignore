@@ -3,5 +3,5 @@
 ^README\.Rmd$
 ^README-.*\.png$
 AWS and the Tidyverse
-
+^Notes
 ^figs
