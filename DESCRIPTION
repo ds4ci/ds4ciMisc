@@ -1,7 +1,7 @@
 Package: ds4ciMisc
 Type: Package
 Title: Miscellaneous Functions for DS4CI Projects
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("Jim", "Porzak", email = "Jim@DS4CI.org",
                   role = c("aut", "cre"))
 Maintainer: Jim Porzak <Jim@DS4CI.org>
@@ -10,9 +10,9 @@ License: GPL-3
 LazyData: TRUE
 Imports:
     stringr,
-    RJDBC,
     odbc,
     DBI,
-    aws.s3
+    aws.s3,
+    dbplyr
 RoxygenNote: 6.0.1
 Suggests: testthat

@@ -35,6 +35,9 @@ is no defaults for a variable not named in the values list, an an error is throw
 
 See dbVis help page by Googling #' "dbvisualizer variables x.x", where x.x is the
 verion of dbVis.
+
+Note that the list \code{values} may have unused elements. Thus, best practice is
+to have a common list for a set of similar queries (eg SELECT, COPY, TRUNCATE, etc)
 }
 \examples{
 \dontrun{
@@ -50,7 +53,7 @@ sql_varsub("SELECT COUNT(*) FROM ${table}", list(table = "my_table"))
 v <- list(table = "sleeping_dogs.sd_text", column = "date_is")
 (q <- sql_varsub(q, v))
 [1] "SELECT COUNT(DISTINCT date_is) AS number_unique_date_is   FROM sleeping_dogs.sd_text ;"
-dbGetQuery(conn, q)    ## assuming RJDBC connection is set up already
+dbGetQuery(conn, q)    ## assuming connection is set up already
 }
 
 }
