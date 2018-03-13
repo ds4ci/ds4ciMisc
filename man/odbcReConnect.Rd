@@ -22,6 +22,6 @@ re-connect.
 Note: odbc::IsValid does not check the connection is actually still live, which
 is why we use dplyr::tbl() to test if live.
 
-Will throw error \emph(Could not re-establish connection.), if new connection is not
+Will throw error \emph{Could not re-establish connection.}, if new connection is not
 \code(identical()) to original.
 }
