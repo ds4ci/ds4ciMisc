@@ -4,7 +4,7 @@
 \alias{odbcReConnect}
 \title{If ODBC connection not functioning, re-connect.}
 \usage{
-odbcReConnect(con, on_table = in_schema("gt_stg", "gt_run_parameters"))
+odbcReConnect(con, on_table = dbplyr::in_schema("pg_catalog", "pg_type"))
 }
 \arguments{
 \item{con}{An established DBI/odbc connection object}
@@ -12,16 +12,16 @@ odbcReConnect(con, on_table = in_schema("gt_stg", "gt_run_parameters"))
 \item{on_table}{The DB table, possibly in a schema, to use for test.}
 }
 \value{
-TRUE when connection is up, perhaps after re-connecting.
+The original, or re-estbalished, connection.
 }
 \description{
 Attempts to create a dplyr::tbl() object. If that fails, then odbc::dbConnect() to
 re-connect.
 }
 \details{
-Note: odbc::IsValid does not check the connection is actually still live, which
-is why we use dplyr::tbl() to test if live.
+Note: \code{odbc::IsValid} does not check the connection is actually still live, which
+is why we use \code{dplyr::tbl()} to test.
 
 Will throw error \emph{Could not re-establish connection.}, if new connection is not
-\code(identical()) to original.
+\code{identical()} to original.
 }
