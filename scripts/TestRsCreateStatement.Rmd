@@ -1,0 +1,71 @@
+---
+title: "Test rs_create_statement"
+output: html_notebook
+author: "Jim Porzak"
+date: "`r Sys.Date()`"
+---
+
+
+```{r libs, message=FALSE}
+library(tidyverse, quietly = TRUE)
+library(stringr)
+library(dbplyr)
+library(DBI)
+library(odbc)
+library(ds4ciMisc)
+```
+
+```{r connect}
+con <- odbc::dbConnect(odbc::odbc(), "LF DAS Redshift ODBC")
+
+gt_run_parameters_tbl <- dplyr::tbl(con, in_schema("gt_stg", "gt_run_parameters"))
+gt_word_list_tbl <- tbl(con, in_schema("gt_stg", "gt_word_list"))
+keyword_metrics_tbl <- tbl(con, in_schema("gt_stg", "keyword_metrics"))
+gt_ontology_tbl <- tbl(con, in_schema("gt_stg", "gt_ontology"))
+
+s3_bucket <- "lfl-dsa-bucket"
+lfGT::init_s3_lf()
+```
+
+### Test1 - gt_run_parameters
+```{r test1}
+gtrp <- gt_run_parameters_tbl %>% 
+  top_n(100, run_at) %>% 
+  collect()
+schema <- "jims_sandbox"
+tname <- "gt_run_parameters"
+rs_tbl_name <- in_schema(schema, tname)
+ret_d <- db_drop_table(con, rs_tbl_name)
+gtrp_CREATE <- ds4ciMisc::rs_create_statement(gtrp, 
+                                              rs_tbl_name,
+                                              sortkeys = c("analysis_id", "run_id"),
+                                              distkey = "analysis_id")
+cat(gtrp_CREATE)
+ret1_c <- dbExecute(con, gtrp_CREATE)
+ret1_c2 <- ds4ciMisc::copy_to_aws(con, gtrp, schema, tname, s3_bucket, clear_s3 = TRUE)
+```
+
+* `r nrow(gtrp)` rows in source data frame.
+* CREATE TABLE returned: `r ret1_c`.
+* COPY TO returned: `r as.integer(ret1_c2)`.
+
+### Test2 - gt_ontology
+```{r test2}
+gto <- gt_ontology_tbl %>% 
+  top_n(10000, skey) %>% 
+  collect()
+tname <- "gt_ontology"
+rs_tbl_name <- in_schema(schema, tname)
+gto_CREATE <- ds4ciMisc::rs_create_statement(gto, 
+                                              rs_tbl_name,
+                                              sortkeys = c("ocm_category_id", "gt_keyword"),
+                                              distkey = "ocm_category_id")
+cat(gto_CREATE)
+ret2_c <- dbExecute(con, gto_CREATE)
+ret2_c2 <- ds4ciMisc::copy_to_aws(con, gto, schema, tname, s3_bucket, clear_s3 = TRUE)
+```
+
+
+* `r nrow(gto)` rows in source data frame.
+* CREATE TABLE returned: `r ret2_c`.
+* COPY TO returned: `r as.integer(ret2_c2)`.

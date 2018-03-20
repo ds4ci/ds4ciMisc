@@ -2,6 +2,7 @@
 
 export(copy_to_aws)
 export(odbcReConnect)
+export(rs_create_statement)
 export(sql_collapse)
 export(sql_list)
 export(sql_varsub)
