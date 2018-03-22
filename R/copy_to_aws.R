@@ -92,5 +92,5 @@ copy_to_aws <- function(con, df, schema = "public", tname = deparse(substitute(d
     if(is.na(as.logical(ret_do))) stop()
   }
 
-  nrow_inserted
+  as.integer(nrow_inserted)
 }

@@ -42,6 +42,9 @@ colToRedshiftType <- function(col, compression) {
          numeric = {
            return('float8')
          },
+         integer64 = {
+           return('bigint')
+         },
          integer = {
            if(all(is.na(col))){ #Unknown column, all null
              return('int')
