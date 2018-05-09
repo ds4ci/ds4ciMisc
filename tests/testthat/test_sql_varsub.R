@@ -28,3 +28,15 @@ test_that("Nothing to do is handled OK",{
   out_string <- "SELECT * FROM sales WHERE sold_on IS NOT NULL;"
   expect_match(sql_varsub(in_string, value_list), out_string, fixed = TRUE)
 })
+
+test_that("'query' is NA handled correctly", {
+  in_string <- NA
+  value_list <- list(dummy = "xxxxx")
+  expect_error(sql_varsub(in_string, value_list))
+})
+
+test_that("Anything in 'values' is NA handled correctly", {
+  in_string <- "SELECT * FROM sales WHERE sold_on IS NOT NULL;"
+  value_list <- list(dummy = NA, another = "xxx")
+  expect_error(sql_varsub(in_string, value_list))
+})

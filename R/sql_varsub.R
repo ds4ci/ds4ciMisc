@@ -50,6 +50,9 @@ sql_varsub <- function(query, values, collapse = TRUE){
     stop("stringr package needed for this function to work. Please install it.",
          call. = FALSE)
   }
+  if (is.na(query)) stop("argument 'query' is NA")
+  if(anyNA(values)) stop("argument 'values' has at least one NA")
+
   q <- query
   if (collapse) q <- sql_collapse(q)
   v <- values
@@ -67,10 +70,10 @@ sql_varsub <- function(query, values, collapse = TRUE){
   # Use defaults in unresolved dbVis variables
   # q <- "SELECT COUNT(DISTINCT ${column||product_id}$) AS number_unique_${column}$   FROM sleeping_dogs.sd_text WHERE ${where_date}$ <= '2016-01-01';" ## debug
   qs <- q %>%
-    str_extract_all("\\$\\{[|[:alnum:]_]*\\}\\$") %>%
+    stringr::str_extract_all("\\$\\{[|[:alnum:]_]*\\}\\$") %>%
     unlist() %>%
-    str_replace_all("[\\$\\{\\}]", "") %>%
-    str_split_fixed(fixed("||"), n = 2) %>%
+    stringr::str_replace_all("[\\$\\{\\}]", "") %>%
+    stringr::str_split_fixed(fixed("||"), n = 2) %>%
     tibble::as_tibble()
   colnames(qs) <- c("variable", "default")
 
